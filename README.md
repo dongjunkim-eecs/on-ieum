@@ -8,8 +8,8 @@
 
 <div align="left">
 
-**Technical Lead** : Steve  
-**Team Member** : others  
+**Technical Lead** : Dongjun Kim 
+**Team Member** : Dongjun Kim, Seunggyu Choi, Jaeseo Lee, Minseo Kim, Subin Choi 
 
 </div>
 
