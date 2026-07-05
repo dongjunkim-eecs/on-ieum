@@ -8,9 +8,9 @@
 
 <div align="left">
 
-**Technical Lead** : Dongjun Kim 
+**Team Member** : Seunggyu Choi, Dongjun Kim, Jaeseo Lee, Minseo Kim, Subin Choi 
 
-**Team Member** : Dongjun Kim, Seunggyu Choi, Jaeseo Lee, Minseo Kim, Subin Choi 
+**Technical Lead** : Dongjun Kim 
 
 </div>
 
