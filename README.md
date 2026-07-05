@@ -17,8 +17,6 @@
 ---
 <div align="left">
   
-### On-ieum Pipeline
-  
 ![On-ieum Pipeline](./assets/onieum_pipeline.png)
 
 </div>
