@@ -3,7 +3,7 @@
 # On-ieum
 
 ### Integrated Public Transportation AIoT System for the Digitally Disadvantaged
-### Capstone Project, Kangwon National University
+#### Capstone Project, Kangwon National University
 </div>
 
 <div align="left">
@@ -17,3 +17,5 @@
 ---
 
 ![On-ieum Pipeline](./assets/onieum_pipeline.png)
+
+---
