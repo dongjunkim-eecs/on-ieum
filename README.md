@@ -12,6 +12,8 @@
 
 **Technical Lead** : Dongjun Kim 
 
+Whole Pipeline comming-soon!
+
 </div>
 
 ---
@@ -38,7 +40,7 @@
 
 ## Contact Information
 
-Dongjun Kim : <ins> jun200205@kangwon.ac.kr </ins>
+Dongjun Kim : jun200205@kangwon.ac.kr
 
 --
 
