@@ -21,7 +21,25 @@
 
 ![On-ieum Pipeline](./assets/onieum_pipeline.png)
 
----
+</div>
+
+<div align="left">
+
+--
+
+## On-ieum In-action video
+
 
 </div>
 
+<div align="left">
+
+--
+
+## Contact Information
+
+Dongjun Kim : <ins> jun200205@kangwon.ac.kr </ins>
+
+--
+
+</div>
