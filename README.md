@@ -12,7 +12,6 @@
 
 **Technical Lead** : Dongjun Kim 
 
-Whole Pipeline comming-soon!
 
 </div>
 
