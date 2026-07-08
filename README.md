@@ -39,7 +39,7 @@
 
 ## Contact Information
 
-Dongjun Kim : jun200205@kangwon.ac.kr
+Dongjun Kim : dongjun.kim.eecs@gmail.com
 
 --
 
