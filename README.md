@@ -2,7 +2,7 @@
 
 # On-ieum
 
-### Integrated Public Transportation AIoT System for the Digitally Disadvantaged
+### Integrated Public Transportation AIoT System for the Digitally Vulnerable
 #### Capstone Project, Kangwon National University
 </div>
 
