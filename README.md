@@ -6,7 +6,7 @@
 
 #### Capstone Project, Kangwon National University; Department of Electronic and Semiconductor Engineering
 
-Team Member : Seung-Gyu Choi, Dongjun Kim, Jae-seo Choi, Soobin Choi, Minseo Kim
+Team Member : Seung-Gyu Choi, Dongjun Kim, Jae-seo Choi, Soobin Choi, Minseo Kim <br>
 Technical Lead : Dongjun Kim
 
 <br>
