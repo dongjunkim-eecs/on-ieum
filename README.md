@@ -39,19 +39,21 @@ Technical Lead : Dongjun Kim
 
 ## Overview
 
-We developed Integrated AIoT systems "On-Ieum" for guiding transportations without requiring smartphone.
-The On-Ieum consist of multiple AI models such as Face Recognition Models, Speech-to-Text Models, and On-Device LLM that inference only Edge Devices(Raspberry Pi 5 and Jetson Orin Nano).
+We developed an integrated AIoT system, "On-Ieum," to provide public transportation guidance without requiring a smartphone.
+
+On-Ieum consists of multiple AI models, including Face Recognition, Speech-to-Text, and an On-Device LLM, all running exclusively on edge devices (Raspberry Pi 5 and Jetson Orin Nano).
 
 ---
 
 ## Motivation
 
-In modern world, utilizing smart-phone abilities are important and basic skills for living many areas. Especially, using public transit networks such as Buses, Subways, and Trains. However, the main center of cities are highly dense and complex. For example, Seoul that Capital of South Korea is the one of the dense areas. The Seoul subways and buses system provide many public transit networks and it's highly complex. Even younger people that familiar with smartphone, it is quite difficult using Seoul's transit networks. The digitally vulnerable people will be more complex than younger people. To address this, we develop Guided Transportation AIoT System that does not require Smartphone, it's called "On-Ieum".
+In the modern world, the ability to use a smartphone has become an essential skill for daily life in many areas, especially for navigating public transit networks such as buses, subways, and trains. However, major city centers are highly dense and complex. For example, Seoul, the capital of South Korea, is one of the densest metropolitan areas, and its extensive subway and bus networks are extremely intricate. Even younger people who are familiar with smartphones often find it difficult to navigate Seoul's transit systems. For the digitally vulnerable, this challenge is even greater. To address this, we developed a guided transportation AIoT system that does not require a smartphone, named "On-Ieum."
 
 ### Meaning of On-Ieum
 
-The On-Ieum word means could explain two sperate ways. The "On" means Warm-Hearts and The "Ieum" means Connection in Korean.
-Overall, we builds the AIoT transportation systems to contribute warm hearts connection with the digitally vulnerable people.
+The name "On-Ieum" can be understood in two ways. In Korean, "On" represents warmth, while "Ieum" signifies connection.
+
+Together, On-Ieum reflects our goal of building an AIoT transportation system that fosters a warm connection with digitally vulnerable populations.
 
 ---
 
