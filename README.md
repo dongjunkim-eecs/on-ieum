@@ -80,7 +80,8 @@ Together, On-Ieum reflects our goal of building an AIoT transportation system th
 ## Getting Started 
 
 To start On-Ieum, you need to prepare **Raspberry Pi 5** and **Jetson Orin Nano**.
-Please refer to [System Architecture](#System Architecture)
+
+Additionally, the Jetson Orin Nano and Raspberry Pi 5 are connected via an Ethernet cable for gRPC communication. 
 
 ### Installation
 
