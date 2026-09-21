@@ -91,13 +91,9 @@ In modern world, utilizing smart-phone abilities are important and basic skills 
 
 ## Contact Information
 
-| Name | Role | Email |
-|------|------|-------|
-| Dongjun Kim | Technical Lead | dongjun.kim.eecs@gmail.com |
-| Seunggyu Choi | Team Member | |
-| Jaeseo Lee | Team Member | |
-| Minseo Kim | Team Member | |
-| Subin Choi | Team Member | |
+If you need to reach this project or have questions,
+
+Technical Leader : Dongjun Kim (dongjun.kim.eecs@gmail.com)
 
 ---
 
