@@ -79,6 +79,83 @@ Together, On-Ieum reflects our goal of building an AIoT transportation system th
 
 ## Getting Started 
 
+To start On-Ieum, you need to prepare **Raspberry Pi 5** and **Jetson Orin Nano**.
+Please refer to [System Architecture](#System Architecture)
+
+### Installation
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/dongjunkim-eecs/on-ieum.git
+cd on-ieum
+```
+
+**2. Generate gRPC files (both devices)**
+```bash
+pip install grpcio grpcio-tools
+python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. capstone.proto
+```
+
+**3. Raspberry Pi 5 setup**
+```bash
+pip install -r requirements_raspi.txt
+```
+
+Download STT model:
+```bash
+pip install ctranslate2 transformers
+ct2-transformers-converter \
+  --model SungBeom/whisper-small-ko \
+  --output_dir ~/whisper-small-ko-ct2 \
+  --quantization int8
+```
+
+**4. Jetson Orin Nano setup**
+```bash
+pip install -r requirements_jet.txt
+```
+
+Download LLM:
+```bash
+huggingface-cli download \
+  LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct-GGUF \
+  EXAONE-3.5-2.4B-Instruct-Q4_K_M.gguf
+```
+
+---
+
+### API Keys
+
+Set environment variables on the Jetson:
+```bash
+export KAKAO_REST_KEY="your_kakao_api_key"
+export ODSAY_API_KEY="your_odsay_api_key"
+```
+
+> Kakao API: https://developers.kakao.com  
+> ODsay API: https://lab.odsay.com
+
+---
+
+### Run
+
+**1. Start gRPC server on Jetson Orin Nano**
+```bash
+cd jetson
+python server_llm_map.py
+```
+
+**2. Start main system on Raspberry Pi 5**
+```bash
+cd raspberry_pi
+python main.py
+```
+
+**3. Open browser on Raspberry Pi**
+```
+http://localhost:5000
+```
+
 ## Physical Custom Hardware
 
 
