@@ -159,6 +159,11 @@ http://localhost:5000
 
 ## Physical Custom Hardware
 
+<div align="center">
+  <img src="./assets/hw1.jpg" width="32%">
+  <img src="./assets/hw2.jpg" width="32%">
+  <img src="./assets/hw3.jpg" width="32%">
+</div>
 
 
 ---
