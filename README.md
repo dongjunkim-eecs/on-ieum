@@ -6,6 +6,9 @@
 
 #### Capstone Project, Kangwon National University; Department of Electronic and Semiconductor Engineering
 
+Team Member : Seung-Gyu Choi, Dongjun Kim, Jae-seo Choi, Soobin Choi, Minseo Kim
+Technical Lead : Dongjun Kim
+
 <br>
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
