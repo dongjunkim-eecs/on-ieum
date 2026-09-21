@@ -69,6 +69,7 @@ Overall, we builds the AIoT transportation systems to contribute warm hearts con
 - Speech-to-Text Model : [Faster-Whisper whisper-small-ko (at Raspberry Pi 5 CPU)](https://huggingface.co/SungBeom/whisper-small-ko)
 - On-Device LLM : [LG EXAONE 3.5 2.4B-Q4 (at Jetson Orin Nano)](https://huggingface.co/LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct)
 - Public Transport API : [Kakao Map API for extracting the destination coordinates](https://apis.map.kakao.com/) and [ODsay Lab for guiding to the destination](https://lab.odsay.com/)
+-  Peripherals : [Raspberry Pi Camera](https://www.raspberrypi.com/products/camera-module-3/) and Microphone(Britz BE-STM300)
   
 ---
 
