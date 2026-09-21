@@ -25,11 +25,10 @@
 1. [Overview](#overview)
 2. [Motivation](#motivation)
 3. [On-Ieum Pipeline](#on-ieum-pipeline)
-4. [Physical Custom Hardware](#physical-custom-hardware)
-5. [Getting Started](#getting-started)
+4. [Getting Started](#getting-started)
+5. [Physical Custom Hardware](#physical-custom-hardware)
 6. [Demo Video](#demo-video)
-7. [References](#references)
-8. [Contact Information](#contact-information)
+7. [Contact Information](#contact-information)
 
 </div>
 
@@ -46,7 +45,7 @@ The On-Ieum consist of multiple AI models such as Face Recognition Models, Speec
 
 In modern world, utilizing smart-phone abilities are important and basic skills for living many areas. Especially, using public transit networks such as Buses, Subways, and Trains. However, the main center of cities are highly dense and complex. For example, Seoul that Capital of South Korea is the one of the dense areas. The Seoul subways and buses system provide many public transit networks and it's highly complex. Even younger people that familiar with smartphone, it is quite difficult using Seoul's transit networks. The digitally vulnerable people will be more complex than younger people. To address this, we develop Guided Transportation AIoT System that does not require Smartphone, it's called "On-Ieum".
 
-# Meaning of On-Ieum
+### Meaning of On-Ieum
 
 The On-Ieum word means could explain two sperate ways. The "On" means Warm-Hearts and The "Ieum" means Connection in Korean.
 Overall, we builds the AIoT transportation systems to contribute warm hearts connection with the digitally vulnerable people.
@@ -85,17 +84,10 @@ Overall, we builds the AIoT transportation systems to contribute warm hearts con
 
 <div align="center">
 
-
+[![On-Ieum Demo](https://img.youtube.com/vi/svm2jcvozz0/maxresdefault.jpg)](https://www.youtube.com/watch?v=svm2jcvozz0)
 
 
 </div>
-
----
-
-## References
-
-
-
 ---
 
 ## Contact Information
