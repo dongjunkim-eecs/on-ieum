@@ -85,7 +85,7 @@ Overall, we builds the AIoT transportation systems to contribute warm hearts con
 
 <div align="center">
 
-[![Demo Video](https://www.youtube.com/watch?v=svm2jcvozz0)](https://www.youtube.com/watch?v=svm2jcvozz0)
+[![Demo Video](https://img.youtube.com/vi/svm2jcvozz0/0.jpg)](https://www.youtube.com/watch?v=svm2jcvozz0)
 
 
 </div>
