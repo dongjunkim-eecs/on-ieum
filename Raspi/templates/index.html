@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>온(溫)-이음</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF6F0;
+    --warm-brown: #8B5E3C;
+    --soft-orange: #E8845A;
+    --muted-gold: #C4954A;
+    --sage: #7A9E7E;
+    --deep-brown: #4A2E1A;
+    --light-sage: #D4E8D6;
+    --warm-white: #FFFDF9;
+    --shadow: rgba(74, 46, 26, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--cream);
+    width: 1920px;
+    height: 1200px;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+
+  /* ── 화면 전환 ── */
+  .screen {
+    position: absolute;
+    width: 100%; height: 100%;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .screen.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  /* ══════════════════════════════
+     시작 화면
+  ══════════════════════════════ */
+  #screen-idle {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #FAF6F0 0%, #F5EDE0 50%, #EFE0CC 100%);
+  }
+
+  .idle-deco {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .idle-deco::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(228,132,90,0.12) 0%, transparent 70%);
+    top: -200px; right: -200px;
+    border-radius: 50%;
+  }
+  .idle-deco::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(122,158,126,0.1) 0%, transparent 70%);
+    bottom: -100px; left: -100px;
+    border-radius: 50%;
+  }
+
+  .idle-logo {
+    font-family: 'Gowun Batang', serif;
+    font-size: 96px;
+    font-weight: 700;
+    color: var(--deep-brown);
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .idle-logo span {
+    color: var(--soft-orange);
+  }
+
+  .idle-subtitle {
+    font-size: 28px;
+    color: var(--warm-brown);
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .idle-divider {
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--muted-gold), transparent);
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-start {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, var(--soft-orange), var(--muted-gold));
+    color: white;
+    border: none;
+    border-radius: 60px;
+    padding: 36px 100px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    cursor: pointer;
+    box-shadow: 0 12px 40px rgba(232, 132, 90, 0.4);
+    transition: all 0.3s ease;
+  }
+  .btn-start:hover, .btn-start:active {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(232, 132, 90, 0.5);
+  }
+
+  .idle-desc {
+    margin-top: 48px;
+    font-size: 24px;
+    color: var(--warm-brown);
+    opacity: 0.7;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ══════════════════════════════
+     얼굴인식 화면
+  ══════════════════════════════ */
+  #screen-face {
+    flex-direction: row;
+  }
+
+  .face-camera-area {
+    flex: 1.2;
+    background: var(--deep-brown);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .face-camera-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .camera-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 48px;
+    background: linear-gradient(to top, rgba(74,46,26,0.6) 0%, transparent 50%);
+  }
+
+  .scan-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 3px solid rgba(232,132,90,0.6);
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+  .scan-ring::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,132,90,0.3);
+    animation: pulse-ring 2s ease-in-out infinite 0.5s;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%,-50%) scale(1.08); opacity: 1; }
+  }
+
+  .camera-status {
+    color: white;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .face-info-area {
+    width: 620px;
+    background: var(--warm-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px;
+    gap: 40px;
+  }
+
+  .face-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 52px;
+    color: var(--deep-brown);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .face-desc {
+    font-size: 26px;
+    color: var(--warm-brown);
+    text-align: center;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .face-icon {
+    width: 140px; height: 140px;
+    background: linear-gradient(135deg, var(--light-sage), var(--sage));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border: 2px solid var(--warm-brown);
+    color: var(--warm-brown);
+    border-radius: 50px;
+    padding: 22px 60px;
+    font-size: 26px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-cancel:hover, .btn-cancel:active {
+    background: var(--warm-brown);
+    color: white;
+  }
+
+  /* ══════════════════════════════
+     음성 인식 화면
+  ══════════════════════════════ */
+  #screen-listen {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #FAF6F0, #F0E8DC);
+    gap: 60px;
+    position: relative;
+  }
+
+  .listen-user-badge {
+    background: white;
+    border-radius: 60px;
+    padding: 20px 48px;
+    font-size: 28px;
+    color: var(--warm-brown);
+    font-weight: 500;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .user-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+  .user-dot.new { background: var(--soft-orange); }
+
+  .mic-visual {
+    position: relative;
+    width: 240px; height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mic-circle {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--soft-orange), var(--muted-gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    box-shadow: 0 0 0 0 rgba(232,132,90,0.4);
+    animation: mic-pulse 1.5s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+  }
+  @keyframes mic-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(232,132,90,0.4); }
+    70% { box-shadow: 0 0 0 40px rgba(232,132,90,0); }
+    100% { box-shadow: 0 0 0 0 rgba(232,132,90,0); }
+  }
+
+  .listen-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 62px;
+    color: var(--deep-brown);
+    text-align: center;
+  }
+
+  .listen-desc {
+    font-size: 30px;
+    color: var(--warm-brown);
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .timer-bar-wrap {
+    width: 600px;
+    background: rgba(139,94,60,0.15);
+    border-radius: 20px;
+    height: 16px;
+    overflow: hidden;
+  }
+  .timer-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--soft-orange), var(--muted-gold));
+    border-radius: 20px;
+    width: 100%;
+    animation: timer-shrink 3s linear forwards;
+  }
+  @keyframes timer-shrink {
+    from { width: 100%; }
+    to { width: 0%; }
+  }
+
+  /* ══════════════════════════════
+     처리 중 화면
+  ══════════════════════════════ */
+  #screen-process {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #FAF6F0, #F0E8DC);
+    gap: 60px;
+  }
+
+  .process-spinner {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 8px solid rgba(139,94,60,0.15);
+    border-top-color: var(--soft-orange);
+    border-right-color: var(--muted-gold);
+    animation: spin 1.2s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .process-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 56px;
+    color: var(--deep-brown);
+  }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 560px;
+  }
+  .process-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 36px;
+    background: white;
+    border-radius: 20px;
+    font-size: 26px;
+    color: var(--warm-brown);
+    box-shadow: 0 4px 16px var(--shadow);
+    opacity: 0.4;
+    transition: opacity 0.5s;
+  }
+  .process-step.active { opacity: 1; }
+  .process-step.done { opacity: 0.7; color: var(--sage); }
+  .step-icon { font-size: 32px; }
+
+  /* ══════════════════════════════
+     결과 화면
+  ══════════════════════════════ */
+  #screen-result {
+    flex-direction: row;
+  }
+
+  .result-left {
+    flex: 1;
+    background: var(--deep-brown);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px;
+    gap: 48px;
+  }
+
+  .result-left-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 52px;
+    color: white;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .result-stt-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 32px 40px;
+    width: 100%;
+  }
+  .result-stt-label {
+    font-size: 20px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+  .result-stt-text {
+    font-size: 30px;
+    color: white;
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  .result-print-btn {
+    background: linear-gradient(135deg, var(--soft-orange), var(--muted-gold));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 28px 72px;
+    font-size: 32px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(232,132,90,0.4);
+    transition: all 0.3s;
+    letter-spacing: 2px;
+  }
+  .result-print-btn:active {
+    transform: scale(0.96);
+  }
+
+  .result-home-btn {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.8);
+    border-radius: 50px;
+    padding: 22px 60px;
+    font-size: 26px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .result-home-btn:active {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .result-right {
+    flex: 1.3;
+    background: var(--warm-white);
+    padding: 80px 72px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .result-route-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 44px;
+    color: var(--deep-brown);
+    border-bottom: 2px solid var(--muted-gold);
+    padding-bottom: 24px;
+  }
+
+  .result-route-text {
+    font-size: 32px;
+    color: var(--deep-brown);
+    line-height: 1.9;
+    font-weight: 400;
+    white-space: pre-line;
+  }
+
+  .result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--light-sage);
+    color: var(--sage);
+    border-radius: 40px;
+    padding: 14px 32px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .result-badge.new {
+    background: #FFE8DC;
+    color: var(--soft-orange);
+  }
+
+  /* ══════════════════════════════
+     에러 화면
+  ══════════════════════════════ */
+  #screen-error {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    background: linear-gradient(160deg, #FAF6F0, #F5E8E0);
+  }
+
+  .error-icon { font-size: 120px; }
+  .error-title {
+    font-family: 'Gowun Batang', serif;
+    font-size: 56px;
+    color: var(--deep-brown);
+  }
+  .error-msg {
+    font-size: 28px;
+    color: var(--warm-brown);
+    font-weight: 300;
+  }
+
+  /* ══════════════════════════════
+     공통 헤더
+  ══════════════════════════════ */
+  .top-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: rgba(250,246,240,0.9);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    z-index: 100;
+    border-bottom: 1px solid rgba(139,94,60,0.1);
+  }
+  .top-logo {
+    font-family: 'Gowun Batang', serif;
+    font-size: 36px;
+    color: var(--deep-brown);
+    font-weight: 700;
+  }
+  .top-logo span { color: var(--soft-orange); }
+  .top-time {
+    margin-left: auto;
+    font-size: 26px;
+    color: var(--warm-brown);
+    font-weight: 300;
+  }
+</style>
+</head>
+<body>
+
+<!-- 시작 화면 -->
+<div id="screen-idle" class="screen active">
+  <div class="idle-deco"></div>
+  <div class="idle-logo">온<span>(溫)</span>-이음</div>
+  <div class="idle-subtitle">따뜻한 대중교통 안내 서비스</div>
+  <div class="idle-divider"></div>
+  <button class="btn-start" onclick="startSystem()">안내 시작하기</button>
+  <div class="idle-desc">버튼을 눌러 시작하세요</div>
+</div>
+
+<!-- 얼굴인식 화면 -->
+<div id="screen-face" class="screen">
+  <div class="top-bar">
+    <div class="top-logo">온<span>(溫)</span>-이음</div>
+    <div class="top-time" id="top-time">--:--</div>
+  </div>
+  <div class="face-camera-area" style="margin-top:80px">
+    <img id="camera-feed" src="/video_feed" alt="카메라">
+    <div class="camera-overlay">
+      <div class="scan-ring"></div>
+      <div class="camera-status">얼굴을 카메라에 가까이 대주세요</div>
+    </div>
+  </div>
+  <div class="face-info-area">
+    <div class="face-icon"></div>
+    <div class="face-title">얼굴을<br>인식하고 있어요</div>
+    <div class="face-desc">카메라를 바라봐 주시면<br>자동으로 확인됩니다</div>
+    <div class="timer-bar-wrap">
+      <div class="timer-bar" id="face-timer-bar"></div>
+    </div>
+  
+    <button class="btn-cancel" onclick="resetSystem()">처음으로</button>
+  </div>
+</div>
+
+<!-- 음성인식 화면 -->
+<div id="screen-listen" class="screen">
+  <div class="top-bar">
+    <div class="top-logo">온<span>(溫)</span>-이음</div>
+    <div class="top-time" id="top-time2">--:--</div>
+  </div>
+  <div id="listen-user-badge" class="listen-user-badge" style="margin-top:80px">
+    <div class="user-dot" id="user-dot"></div>
+    <span id="listen-user-text">사용자 확인됨</span>
+  </div>
+  <div class="mic-visual">
+    <div class="mic-circle"></div>
+  </div>
+  <div class="listen-title">말씀해 주세요</div>
+  <div class="listen-desc">목적지를 말씀해주시면 경로를 안내해드려요</div>
+  <div class="timer-bar-wrap">
+    <div class="timer-bar" id="timer-bar"></div>
+  </div>
+</div>
+
+<!-- 처리 중 화면 -->
+<div id="screen-process" class="screen">
+  <div class="top-bar">
+    <div class="top-logo">온<span>(溫)</span>-이음</div>
+  </div>
+  <div class="process-spinner" style="margin-top:80px"></div>
+  <div class="process-title">경로를 찾고 있어요</div>
+
+<div class="process-steps">
+    <div class="process-step done" id="step1">
+        <span class="step-icon">1</span> 음성 텍스트 변환 완료
+    </div>
+    <div class="process-step done" id="step2">
+        <span class="step-icon">2</span> 목적지 분석 완료
+    </div>
+    <div class="process-step active" id="step3">
+        <span class="step-icon">3</span> 경로 탐색 중
+    </div>
+    <div class="process-step" id="step4">
+        <span class="step-icon">4</span> 안내 문장 생성 중
+    </div>
+</div>
+  </div>
+</div>
+
+<!-- 결과 화면 -->
+<div id="screen-result" class="screen">
+  <div class="result-left">
+    <div class="result-left-title">안내가<br>완료되었어요</div>
+    <div id="result-badge" class="result-badge">기존 사용자</div>
+    <div class="result-stt-box">
+      <div class="result-stt-label">인식된 말씀</div>
+      <div class="result-stt-text" id="result-stt"></div>
+    </div>
+    <button class="result-print-btn" onclick="resetSystem()">영수증 출력됨</button>
+    <button class="result-home-btn" onclick="resetSystem()">처음으로 돌아가기</button>
+  </div>
+  <div class="result-right">
+    <div class="result-route-title">경로 안내</div>
+    <div class="result-route-text" id="result-route"></div>
+  </div>
+</div>
+
+<!-- 에러 화면 -->
+<div id="screen-error" class="screen">
+  <div class="error-icon"></div>
+  <div class="error-title">죄송해요</div>
+  <div class="error-msg" id="error-msg">다시 시도해주세요</div>
+  <button class="btn-start" onclick="resetSystem()">다시 시작하기</button>
+</div>
+
+<script>
+let currentScreen = 'idle';
+let pollInterval = null;
+let stepTimeout = null;
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  const el = document.getElementById('screen-' + name);
+  if (el) {
+    el.style.display = 'flex';
+    setTimeout(() => el.classList.add('active'), 10);
+  }
+  currentScreen = name;
+}
+
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  ['top-time', 'top-time2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = h + ':' + m;
+  });
+}
+setInterval(updateClock, 300);
+updateClock();
+
+async function startSystem() {
+  await fetch('/start', { method: 'POST' });
+  showScreen('face');
+  startPolling();
+}
+
+async function resetSystem() {
+  await fetch('/reset', { method: 'POST' });
+  if (pollInterval) clearInterval(pollInterval);
+  document.getElementById('camera-feed').src = '/video_feed';
+  showScreen('idle');
+}
+
+function startPolling() {
+  if (pollInterval) clearInterval(pollInterval);
+  pollInterval = setInterval(pollState, 300);
+}
+
+let lastPhase = '';
+async function pollState() {
+  try {
+    const res = await fetch('/state');
+    const data = await res.json();
+
+    if (data.phase === lastPhase) return;
+    lastPhase = data.phase;
+
+    if (data.phase === 'face') {
+    showScreen('face');
+    
+    // 타이머 바 3초 시작
+    const bar = document.getElementById('face-timer-bar');
+    bar.style.animation = 'none';
+    bar.offsetHeight;
+    bar.style.animation = 'timer-shrink 5s linear forwards';
+    }
+    else if (data.phase === 'listening') {
+      // 배지 업데이트
+      const dot = document.getElementById('user-dot');
+      const txt = document.getElementById('listen-user-text');
+      if (data.is_new_user) {
+        dot.className = 'user-dot new';
+        txt.textContent = '처음 오셨군요! 환영합니다';
+      } else {
+        dot.className = 'user-dot';
+        txt.textContent = data.user_id + ' 님, 반갑습니다!';
+      }
+      showScreen('listen');
+      // 타이머 바 리셋
+      const bar = document.getElementById('timer-bar');
+      bar.style.animation = 'none';
+      bar.offsetHeight; // reflow
+      bar.style.animation = 'timer-shrink 5s linear forwards';
+      setTimeout(() => {
+        showScreen('process');
+        animateSteps();
+    }, 5500);  // 5초 + 0.5초 여유
+      // STT 시작 요청
+      setTimeout(() => fetch('/start_listen', { method: 'POST' }), 500);
+    }
+    else if (data.phase === 'processing') {
+    showScreen('process');
+    
+    const stepMap = {
+        'stt':       { done: [],           active: 1 },
+        'sending':   { done: [1],          active: 2 },
+        'route':     { done: [1,2],        active: 3 },
+        'llm':       { done: [1,2,3],      active: 4 },
+        'done_wait': { done: [1,2,3,4],    active: 4 },
+    };
+    
+    const s = stepMap[data.process_step];
+    if (s) {
+        [1,2,3,4].forEach(i => {
+            const el = document.getElementById('step' + i);
+            if (!el) return;
+            if (s.done.includes(i)) el.className = 'process-step done';
+            else if (s.active === i) el.className = 'process-step active';
+            else el.className = 'process-step';
+        });
+    }
+}
+    else if (data.phase === 'result') {
+      if (pollInterval) clearInterval(pollInterval);
+      document.getElementById('result-stt').textContent = data.stt_text;
+      document.getElementById('result-route').textContent = data.ai_reply;
+      const badge = document.getElementById('result-badge');
+      if (data.is_new_user) {
+        badge.className = 'result-badge new';
+        badge.textContent = '새로운 사용자';
+      } else {
+        badge.className = 'result-badge';
+        badge.textContent = data.user_id + ' 님';
+      }
+      showScreen('result');
+      // 10초 후 자동 홈
+      setTimeout(resetSystem, 30000);
+    }
+    else if (data.phase === 'error') {
+      if (pollInterval) clearInterval(pollInterval);
+      document.getElementById('error-msg').textContent = data.error;
+      showScreen('error');
+    }
+  } catch(e) {
+    console.error('폴링 오류:', e);
+  }
+}
+
+function animateSteps() {
+  const steps = ['step1', 'step2', 'step3'];
+  steps.forEach(s => {
+    document.getElementById(s).className = 'process-step';
+  });
+  document.getElementById('step1').className = 'process-step active';
+
+  setTimeout(() => {
+    document.getElementById('step1').className = 'process-step done';
+    document.getElementById('step2').className = 'process-step active';
+  }, 3000);
+
+  setTimeout(() => {
+    document.getElementById('step2').className = 'process-step done';
+    document.getElementById('step3').className = 'process-step active';
+  }, 7000);
+}
+</script>
+</body>
+</html>

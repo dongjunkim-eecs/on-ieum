@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package capstone;
+
+// 통신 서비스 정의
+service AIBridge {
+  // 라즈베리 파이가 텍스트를 보내면 젯슨이 답변을 반환함
+  rpc Inference (UserRequest) returns (AIResponse) {}
+}
+
+// 라즈베리 파이 -> 젯슨
+message UserRequest {
+  string text = 1;
+}
+
+// 젯슨 -> 라즈베리 파이
+message AIResponse {
+  string reply = 1;
+}
