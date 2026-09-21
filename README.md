@@ -82,12 +82,9 @@ Overall, we builds the AIoT transportation systems to contribute warm hearts con
 
 ## Demo Video
 
-<div align="center">
-
-[![On-Ieum Demo](https://img.youtube.com/vi/svm2jcvozz0/maxresdefault.jpg)](https://www.youtube.com/watch?v=svm2jcvozz0)
-
-
-</div>
+<a href="https://www.youtube.com/watch?v=svm2jcvozz0">
+  <img src="https://img.youtube.com/vi/svm2jcvozz0/maxresdefault.jpg" width="600">
+</a>
 ---
 
 ## Contact Information
